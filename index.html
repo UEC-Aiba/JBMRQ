@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>バルセロナ音楽報酬質問紙（日本語版）</title>
+<style>
+:root{
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+  --paper:#f4f6f8; --card:#ffffff; --ink:#1c2433; --sub:#566074; --line:#c9d1dc;
+  --accent:#0d6b78; --accent-ink:#ffffff; --accent-soft:#dcedef; --warn:#a4501a;
+  --serif:"Hiragino Mincho ProN","Yu Mincho","Noto Serif JP","Source Han Serif JP","MS PMincho",serif;
+  --sans:"Hiragino Sans","Hiragino Kaku Gothic ProN","Yu Gothic UI","Yu Gothic","Noto Sans JP","Meiryo",sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#10151c; --card:#181f29; --ink:#e7ecf3; --sub:#a3adbd; --line:#334052;
+    --accent:#5cc3cd; --accent-ink:#0b1217; --accent-soft:#1c3a40; --warn:#e0a070;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#10151c; --card:#181f29; --ink:#e7ecf3; --sub:#a3adbd; --line:#334052;
+  --accent:#5cc3cd; --accent-ink:#0b1217; --accent-soft:#1c3a40; --warn:#e0a070;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 12px);-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.75;min-height:100%}
+.wrap{max-width:720px;margin:0 auto;padding:20px 18px 120px}
+h1,h2{font-family:var(--serif);font-weight:700;line-height:1.4;margin:0}
+h1{font-size:1.65rem;letter-spacing:.02em}
+h2{font-size:1.3rem}
+.en{color:var(--sub);font-size:.88rem;margin:.2rem 0 0}
+.lead{margin:1.1rem 0 0}
+.note{color:var(--sub);font-size:.9rem;margin:.6rem 0 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin:12px 0}
+.scale{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin:18px 0 6px;font-size:.78rem;line-height:1.35;color:var(--sub);text-align:center}
+.scale b{display:block;font-size:1.05rem;color:var(--ink);font-family:var(--serif)}
+fieldset.item{border:0;margin:0;padding:0}
+.item{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 16px 12px;margin:12px 0;transition:border-color .2s,background .2s}
+.item.done{border-color:var(--accent)}
+.item legend{padding:0;float:left;width:100%;font-size:1rem;line-height:1.7}
+.item legend .no{display:inline-block;min-width:2.6em;font-family:var(--serif);font-weight:700;color:var(--accent)}
+.opts{clear:both;display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-top:10px}
+.opts label{position:relative;display:block}
+.opts input{position:absolute;opacity:0;inset:0;width:100%;height:100%;margin:0;cursor:pointer}
+.opts span{display:flex;align-items:center;justify-content:center;min-height:48px;border:1.5px solid var(--line);border-radius:8px;font-family:var(--serif);font-size:1.15rem;background:var(--paper);color:var(--ink);transition:background .15s,border-color .15s,color .15s}
+.opts input:checked + span{background:var(--accent);border-color:var(--accent);color:var(--accent-ink);font-weight:700}
+.opts input:focus-visible + span{outline:3px solid var(--accent);outline-offset:2px}
+.picked{min-height:1.5em;margin:6px 0 0;font-size:.88rem;color:var(--sub)}
+.bar{position:sticky;bottom:0;left:0;right:0;margin:0 -18px;padding:10px 18px calc(10px + env(safe-area-inset-bottom,0px));background:var(--paper);border-top:1px solid var(--line);display:flex;gap:14px;align-items:center;z-index:5}
+.meter{flex:1;min-width:0}
+.meter .t{font-size:.88rem;color:var(--sub)}
+.meter .track{height:6px;border-radius:3px;background:var(--line);overflow:hidden;margin-top:4px}
+.meter .fill{height:100%;width:0;background:var(--accent);transition:width .25s}
+button{font:inherit;cursor:pointer}
+.btn{border:0;border-radius:8px;padding:12px 18px;min-height:48px;background:var(--accent);color:var(--accent-ink);font-weight:700;font-size:1rem}
+.btn.ghost{background:transparent;color:var(--accent);border:1.5px solid var(--accent)}
+.btn:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+#result{display:none}
+.staff{width:100%;height:auto;display:block;margin:6px 0 0}
+.staff .ln{stroke:var(--line);stroke-width:1.4}
+.staff .mid{stroke:var(--sub);stroke-width:2.2}
+.staff .ax{fill:var(--sub);font-size:12px;font-family:var(--sans)}
+.staff .nm{fill:var(--ink);font-size:13px;font-family:var(--sans);font-weight:700}
+.staff .val{fill:var(--ink);font-size:14px;font-family:var(--serif);font-weight:700}
+.staff .nh{fill:var(--accent)} .staff .nh.open{fill:var(--card);stroke:var(--accent);stroke-width:3}
+.staff .st{stroke:var(--accent);stroke-width:2.4}
+.staff .gh{stroke:var(--sub);stroke-width:1.4}
+.rows{margin:6px 0 0;padding:0;list-style:none}
+.rows li{display:grid;grid-template-columns:1fr auto;gap:2px 14px;padding:12px 0;border-top:1px solid var(--line)}
+.rows li:first-child{border-top:0}
+.rows .n{font-family:var(--serif);font-weight:700;font-size:1.05rem}
+.rows .n small{font-family:var(--sans);font-weight:400;color:var(--sub);font-size:.82rem;margin-left:.5em}
+.rows .d{grid-column:1;color:var(--sub);font-size:.9rem;line-height:1.55}
+.rows .v{grid-column:2;grid-row:1 / span 2;text-align:right;font-family:var(--serif);font-weight:700;font-size:1.9rem;line-height:1.1}
+.rows .v small{display:block;font-family:var(--sans);font-weight:400;font-size:.78rem;color:var(--sub);margin-top:2px}
+.actions{display:flex;flex-wrap:wrap;gap:10px;margin:16px 0 0}
+.cite{color:var(--sub);font-size:.8rem;line-height:1.6;margin-top:28px;border-top:1px solid var(--line);padding-top:12px}
+@media (prefers-reduced-motion: reduce){*{transition:none!important}}
+@media (max-width:380px){body{font-size:16px}.opts span{min-height:44px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>バルセロナ音楽報酬質問紙</h1>
+    <p class="en">Barcelona Music Reward Questionnaire・日本語版（J-BMRQ）</p>
+  </header>
+
+  <main id="quiz">
+    <p class="lead">音楽から得られる喜びには、人によって違いがあります。20の項目に、感じたままにできるだけ正確に答えてください（約3分）。</p>
+    <p class="note">回答はこの画面の中だけで計算され、送信も保存もされません。授業での体験用で、診断や評価のためのものではありません。</p>
+
+    <div class="scale" aria-hidden="true">
+      <div><b>1</b>まったくそう思わない</div>
+      <div><b>2</b>あまりそう思わない</div>
+      <div><b>3</b>どちらともいえない</div>
+      <div><b>4</b>ややそう思う</div>
+      <div><b>5</b>とてもそう思う</div>
+    </div>
+
+    <form id="form" autocomplete="off" onsubmit="return false"></form>
+
+    <div class="bar">
+      <div class="meter" aria-live="polite">
+        <div class="t" id="count">回答 0／20</div>
+        <div class="track"><div class="fill" id="fill"></div></div>
+      </div>
+      <button class="btn" id="go" type="button">次の未回答へ</button>
+    </div>
+  </main>
+
+  <section id="result" aria-labelledby="rt">
+    <h2 id="rt">結果：あなたの音楽報酬プロフィール</h2>
+    <p class="note" style="margin-top:.4rem">5つの側面と全体の、計6つの得点を、五線に音符で表しました。</p>
+    <div class="card">
+      <svg class="staff" id="staff" viewBox="0 0 360 296" role="img" aria-label="6つの得点を五線の音符で表したグラフ"></svg>
+      <p class="note">五線は、得点30〜70の範囲です。中央の太い線が平均の50です。音符が中央の線より高いほど、その傾向は標準化の基準の平均より強いことを表します。</p>
+    </div>
+    <div class="card">
+      <ul class="rows" id="rows"></ul>
+    </div>
+    <p class="note">得点は、得点計算ファイルの標準化（平均50、標準偏差10）にもとづく値です。標準化した値なので、0より小さくなったり、100を超えたりすることもあります。各側面の説明は、項目の内容にもとづく簡単な説明です。</p>
+    <div class="actions">
+      <button class="btn" id="copy" type="button">結果をコピー</button>
+      <button class="btn ghost" id="review" type="button">回答を見直す</button>
+      <button class="btn ghost" id="again" type="button">最初からやり直す</button>
+    </div>
+    <p class="note" id="copied" aria-live="polite"></p>
+  </section>
+
+  <footer class="cite">
+    日本語版：Honda, S., Mas-Herrero, E., Isoda, M., Muraki, M., Lorenzo-Seva, U., Kitayama, Y., Savage, P. E., &amp; Fujii, S. (2026). The Japanese version of the Barcelona Music Reward Questionnaire (J-BMRQ) confirms the cross-cultural generalizability of the “five-factor” model. <i>PLOS ONE</i>, 21(2), e0340700.<br>
+    原版：Mas-Herrero, E., Marco-Pallarés, J., Lorenzo-Seva, U., Zatorre, R. J., &amp; Rodriguez-Fornells, A. (2013). Individual differences in music reward experiences. <i>Music Perception</i>, 31(2).
+  </footer>
+</div>
+
+<script>
+var D={"items":["音楽を誰かと共有すると、その人と特別なつながりを感じる。","暇な時間に音楽を聴くことはほとんどない。","感情のこもった音楽を聴くのが好きだ。","ひとりでいる時、音楽を聴くと寂しさが和らぐ。","好きな音楽でも、その音楽に合わせて踊るのは好きではない。","音楽を通してほかの人とつながることができる。","自分の好きな音楽についての情報をよく集める。","ある種の曲を聴くと、感情的になる。","音楽を聴いていると心が落ち着き、リラックスできる。","音楽を聴いているとダンスしたくなる。","いつも新しい音楽を探している。","大好きなメロディーを聴くと涙がこみ上げたり泣いてしまったりすることがある。","ほかの人たちと一緒に歌ったり、楽器を演奏したりするのが好きだ。","音楽を聴くと落ち着く。","好きな音楽に合わせて、ついついハミングしたり歌ったりしてしまう。","コンサートやライブでは、演奏者や観客など、みんなとの一体感を感じる。","音楽やそれに関連するものにかなりのお金を費やしている。","好きなメロディーを聴いていて、ぞくぞくすることがときどきある。","音楽は私を慰めてくれる。","大好きな曲を聴いていると、思わずリズムに合わせて足を鳴らしたり、体を動かしたりしてしまう。"],"P":{"moda":[4,1,5,5,2,5,5,5,5,4,4,5,5,5,5,5,4,5,5,5],"md":[4.0232,1.7323,4.169,4.1632,2.3723,4.3013,4.1368,4.2329,4.4135,3.4419,3.1619,3.7555,3.9458,4.3529,4.5432,4.2968,3.4374,4.3271,4.3006,4.4168],"sx":[1.0071,0.9834,0.958,0.9983,1.2302,0.897,0.9974,0.9896,0.8186,1.2197,1.1891,1.27,1.1938,0.8123,0.7625,0.9989,1.3386,0.949,0.9104,0.9036],"w":{"seeking":[-0.007,-0.2691,-0.0428,-0.0214,0.0817,-0.0099,0.5101,-0.0232,-0.0182,-0.0352,0.3459,-0.0919,-0.0179,0.0076,-0.1162,-0.0691,0.3152,0.1453,0.0047,0.0154],"emotion":[0.0044,0.0503,0.1682,-0.0023,0.0277,-0.0314,-0.0001,0.3828,-0.0092,-0.0129,-0.069,0.3557,0.0142,-0.0473,0.0608,0.0402,0.0858,0.2779,0.1664,0.0665],"mood":[0.0487,-0.1592,0.0738,0.1983,0.0477,0.0024,0.0327,0.015,0.3262,0.0005,0.0597,-0.0282,-0.0091,0.3522,0.0622,0.0001,-0.0526,0.0043,0.1716,-0.0015],"sensory":[-0.0933,-0.072,-0.0492,-0.0249,-0.4234,-0.1298,-0.0507,-0.0153,-0.0272,0.4585,0.0936,-0.0389,0.016,-0.028,0.1331,0.0161,-0.0528,-0.0172,-0.0393,0.269],"social":[0.2367,0.0574,0.0457,0.0586,-0.0906,0.3758,0.0057,-0.0348,-0.0305,0.0382,-0.0356,0.0435,0.2272,-0.0225,0.118,0.2515,0.0897,0.0012,0.0194,0.0917],"total":[0.0892,-0.0868,0.076,0.0886,-0.065,0.103,0.0943,0.091,0.0996,0.0817,0.069,0.0796,0.0843,0.1053,0.0878,0.0946,0.0832,0.1022,0.1133,0.102]}}};
+var NAMES=[
+  {k:"total",   ja:"音楽報酬（全体）", en:"Music reward", short:"全体", d:"音楽から得られる喜びや報酬の全体的な大きさ"},
+  {k:"seeking", ja:"音楽の探索",      en:"Musical Seeking", short:"探索", d:"新しい音楽を探し、好きな音楽の情報を集める傾向"},
+  {k:"emotion", ja:"感情の喚起",      en:"Emotion Evocation", short:"感情", d:"音楽で感情が動く（涙が出る、ぞくぞくする）傾向"},
+  {k:"mood",    ja:"気分の調整",      en:"Mood Regulation", short:"気分", d:"音楽で気持ちが落ち着き、慰められる傾向"},
+  {k:"sensory", ja:"感覚運動",        en:"Sensory-Motor", short:"運動", d:"音楽に合わせて体が動き、踊りたくなる傾向"},
+  {k:"social",  ja:"社会的報酬",      en:"Social Reward", short:"社会", d:"音楽を通して人とつながる傾向"}
+];
+var LABELS=["まったくそう思わない","あまりそう思わない","どちらともいえない","ややそう思う","とてもそう思う"];
+var answers=new Array(20).fill(0);
+var form=document.getElementById("form");
+
+function build(){
+  var html="";
+  for(var i=0;i<20;i++){
+    var opts="";
+    for(var v=1;v<=5;v++){
+      opts+='<label><input type="radio" name="q'+i+'" value="'+v+'" aria-label="'+v+'：'+LABELS[v-1]+'"><span aria-hidden="true">'+v+'</span></label>';
+    }
+    html+='<fieldset class="item" id="item'+i+'"><legend><span class="no">Q'+(i+1)+'</span>'+D.items[i]+'</legend><div class="opts">'+opts+'</div><p class="picked" id="pk'+i+'"></p></fieldset>';
+  }
+  form.innerHTML=html;
+  form.addEventListener("change",function(e){
+    var t=e.target; if(!t||t.type!=="radio") return;
+    var i=parseInt(t.name.slice(1),10), v=parseInt(t.value,10);
+    answers[i]=v; document.getElementById("item"+i).classList.add("done");
+    document.getElementById("pk"+i).textContent=v+"：選択："+LABELS[v-1];
+    update();
+    var nx=firstOpen(i+1); if(nx>=0){ setTimeout(function(){ document.getElementById("item"+nx).scrollIntoView({behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth",block:"center"}); },180); }
+  });
+}
+function firstOpen(from){ for(var j=from;j<20;j++){ if(!answers[j]) return j; } for(var j2=0;j2<from&&j2<20;j2++){ if(!answers[j2]) return j2; } return -1; }
+function nDone(){ return answers.filter(Boolean).length; }
+function update(){
+  var n=nDone();
+  document.getElementById("count").textContent="回答 "+n+"／20";
+  document.getElementById("fill").style.width=(n/20*100)+"%";
+  var go=document.getElementById("go");
+  go.textContent=(n===20)?"結果を見る":"次の未回答へ（残り"+(20-n)+"問）";
+}
+function scores(a){
+  var P=D.P, out={};
+  var z=a.map(function(x,j){ return (x-P.md[j])/P.sx[j]; });
+  NAMES.forEach(function(nm){
+    var w=P.w[nm.k], s=0; for(var j=0;j<20;j++) s+=z[j]*w[j];
+    out[nm.k]=Math.round(s*10+50);
+  });
+  return out;
+}
+function diffText(t){ return t>50?("平均より"+(t-50)+"高い"):(t<50?("平均より"+(50-t)+"低い"):"平均と同じ"); }
+
+function drawStaff(sc,animate){
+  var svg=document.getElementById("staff"), NS="http://www.w3.org/2000/svg";
+  var STEP=28, Y50=132, XS=[86,138,190,242,294,342];
+  function yOf(t){ t=Math.max(14,Math.min(86,t)); return Y50-(t-50)/10*STEP; }
+  var h="";
+  [30,40,50,60,70].forEach(function(t){ h+='<line class="'+(t===50?'mid':'ln')+'" x1="64" x2="352" y1="'+yOf(t)+'" y2="'+yOf(t)+'"/>'; h+='<text class="ax" x="54" y="'+(yOf(t)+4)+'" text-anchor="end">'+t+'</text>'; });
+  h+='<text class="ax" x="54" y="'+(yOf(50)+20)+'" text-anchor="end">平均</text>';
+  NAMES.forEach(function(nm,i){
+    var t=sc[nm.k], x=XS[i], y=yOf(t), up=(t<50);
+    var ledgers=""; [80,90].forEach(function(L){ if(t>=L-4) ledgers+='<line class="gh" x1="'+(x-17)+'" x2="'+(x+17)+'" y1="'+yOf(L)+'" y2="'+yOf(L)+'"/>'; });
+    [20,10].forEach(function(L){ if(t<=L+4) ledgers+='<line class="gh" x1="'+(x-17)+'" x2="'+(x+17)+'" y1="'+yOf(L)+'" y2="'+yOf(L)+'"/>'; });
+    var stem=up?'<line class="st" x1="9.6" x2="9.6" y1="0" y2="-44"/>':'<line class="st" x1="-9.6" x2="-9.6" y1="0" y2="44"/>';
+    var open=(nm.k==="total")?" open":"";
+    var lab=up?('<text class="val" x="'+x+'" y="'+(y+30)+'" text-anchor="middle">'+t+'</text>'):('<text class="val" x="'+x+'" y="'+(y-17)+'" text-anchor="middle">'+t+'</text>');
+    h+=ledgers+'<g class="note-g" data-x="'+x+'" data-y="'+y+'" style="transform:translate('+x+'px,'+(animate?Y50:y)+'px)"><g transform="rotate(-20)"><ellipse class="nh'+open+'" rx="11" ry="8"/></g>'+stem+'</g>'+lab;
+    h+='<text class="nm" x="'+x+'" y="288" text-anchor="middle">'+nm.short+'</text>';
+  });
+  svg.innerHTML=h;
+  if(animate && !matchMedia("(prefers-reduced-motion: reduce)").matches){
+    var gs=svg.querySelectorAll(".note-g");
+    requestAnimationFrame(function(){ requestAnimationFrame(function(){
+      gs.forEach(function(g){ g.style.transition="transform .7s cubic-bezier(.2,.8,.2,1)"; g.style.transform="translate("+g.dataset.x+"px,"+g.dataset.y+"px)"; });
+    });});
+  } else if(animate){
+    svg.querySelectorAll(".note-g").forEach(function(g){ g.style.transform="translate("+g.dataset.x+"px,"+g.dataset.y+"px)"; });
+  }
+}
+
+var last=null;
+function showResult(){
+  var sc=scores(answers); last=sc;
+  var rows="";
+  NAMES.forEach(function(nm){
+    var t=sc[nm.k];
+    rows+='<li><div class="n">'+nm.ja+'<small>'+nm.en+'</small></div><div class="d">'+nm.d+'</div><div class="v">'+t+'<small>'+diffText(t)+'</small></div></li>';
+  });
+  document.getElementById("rows").innerHTML=rows;
+  document.getElementById("quiz").style.display="none";
+  document.getElementById("result").style.display="block";
+  document.getElementById("copied").textContent="";
+  drawStaff(sc,true);
+  window.scrollTo({top:0,behavior:"auto"});
+}
+function textResult(){
+  var s="バルセロナ音楽報酬質問紙（日本語版）の結果\n";
+  NAMES.forEach(function(nm){ s+=nm.ja+"："+last[nm.k]+"（"+diffText(last[nm.k])+"）\n"; });
+  s+="※得点は平均50、標準偏差10に標準化した値";
+  return s;
+}
+document.getElementById("go").addEventListener("click",function(){
+  if(nDone()===20){ showResult(); return; }
+  var nx=firstOpen(0); if(nx>=0) document.getElementById("item"+nx).scrollIntoView({behavior:"smooth",block:"center"});
+});
+document.getElementById("copy").addEventListener("click",function(){
+  var msg=document.getElementById("copied"), txt=textResult();
+  function ok(){ msg.textContent="結果をコピーしました。"; }
+  function ng(){ msg.textContent="コピーできませんでした。画面の数字を書き写してください。"; }
+  try{ if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(txt).then(ok,ng); } else { ng(); } }catch(e){ ng(); }
+});
+document.getElementById("review").addEventListener("click",function(){
+  document.getElementById("result").style.display="none"; document.getElementById("quiz").style.display="block"; window.scrollTo({top:0,behavior:"auto"});
+});
+document.getElementById("again").addEventListener("click",function(){
+  answers=new Array(20).fill(0);
+  form.querySelectorAll("input").forEach(function(i){ i.checked=false; });
+  form.querySelectorAll(".item").forEach(function(e){ e.classList.remove("done"); });
+  form.querySelectorAll(".picked").forEach(function(e){ e.textContent=""; });
+  document.getElementById("result").style.display="none"; document.getElementById("quiz").style.display="block"; update(); window.scrollTo({top:0,behavior:"auto"});
+});
+build(); update();
+</script>
+</body>
+</html>
